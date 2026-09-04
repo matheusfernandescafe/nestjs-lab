@@ -50,3 +50,13 @@ Thumbs.db
 # NestJS build output
 tsconfig.build.tsbuildinfo
 
+# Env
+.env
+
+# Prisma
+prisma/generated
+/src/generated/prisma
+.agents
+.claude
+.windsurf
+skills-lock.json
