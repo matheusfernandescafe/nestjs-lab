@@ -60,3 +60,4 @@ prisma/generated
 .claude
 .windsurf
 skills-lock.json
+\n# Prisma\nsrc/generated/prisma
