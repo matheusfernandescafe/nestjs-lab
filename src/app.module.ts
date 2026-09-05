@@ -4,6 +4,8 @@ import { createObserveModule } from '@nestjs/observe';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { AccountController } from './controllers/account.controller.js';
 import { envSchema } from './env.js';
+import { AuthModule } from './auth/auth.module.js';
+import { AuthenticateController } from './controllers/authenticate.controller.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -14,13 +16,14 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       isGlobal: true,
     }),
     PrismaModule,
+    AuthModule,
     //ObserveModule.forRoot({
     //  appKey: 'YOUR_APP_KEY',
     //  appSecret: 'YOUR_APP_SECRET',
     //  serviceId: '05-nest-clean',
     //}),
   ],
-  controllers: [AccountController],
+  controllers: [AccountController, AuthenticateController],
   providers: [PrismaModule],
 })
 export class AppModule {}
