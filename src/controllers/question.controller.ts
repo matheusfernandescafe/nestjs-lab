@@ -1,6 +1,8 @@
 import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service.js";
 import { AuthGuard } from "@nestjs/passport";
+import { CurrentUser } from "../auth/current-user-decorator.js";
+import * as jwtStrategy from "../auth/jwt.strategy.js";
 
 @Controller('/question')
 @UseGuards(AuthGuard('jwt'))
@@ -10,7 +12,7 @@ export class QuestionController {
     ) {}
 
     @Post()
-    async handle() {
-
+    async handle(@CurrentUser() user: jwtStrategy.UserPayload) {
+        return 'ok';
     }
 }
