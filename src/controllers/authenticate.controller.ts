@@ -30,8 +30,6 @@ export class AuthenticateController {
             }
         });
 
-        console.log(user);
-
         if (!user) {
             throw new UnauthorizedException('User credentials do not match');
         }
@@ -41,7 +39,11 @@ export class AuthenticateController {
         if (!isPasswordValid) {
             throw new UnauthorizedException('User credentials do not match');
         }
+
+        const accessToken = this.jwtService.sign({ sub: user.Id });
         
-        return this.jwtService.sign({ sub: user.Id });
+        return { 
+            accessToken: accessToken
+        }
     }
 }

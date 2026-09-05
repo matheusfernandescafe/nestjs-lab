@@ -6,6 +6,8 @@ import { AccountController } from './controllers/account.controller.js';
 import { envSchema } from './env.js';
 import { AuthModule } from './auth/auth.module.js';
 import { AuthenticateController } from './controllers/authenticate.controller.js';
+import { QuestionController } from './controllers/question.controller.js';
+import { JwtStrategy } from './auth/jwt.strategy.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -23,7 +25,14 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     //  serviceId: '05-nest-clean',
     //}),
   ],
-  controllers: [AccountController, AuthenticateController],
-  providers: [PrismaModule],
+  controllers: [
+    AccountController,
+    AuthenticateController,
+    QuestionController
+  ],
+  providers: [
+    PrismaModule,
+    JwtStrategy,
+  ],
 })
 export class AppModule {}
