@@ -1,10 +1,20 @@
-import { Body, Controller, Post, UseGuards, UsePipes } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UseGuards } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service.js";
 import { AuthGuard } from "@nestjs/passport";
 import { CurrentUser } from "../auth/current-user-decorator.js";
 import * as jwtStrategy from "../auth/jwt.strategy.js";
 import z from "zod";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe.js";
+
+const pageQueryParamSchema = z
+    .string()
+    .optional()
+    .default('1')
+    .transform(Number)
+    .pipe(z.number().min(1));
+
+const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema);
+type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>;
 
 const createQuestionBodySchema = z.object({
     title: z.string(),
@@ -19,6 +29,21 @@ export class QuestionController {
     constructor(
         private prismaService: PrismaService
     ) {}
+
+    @Get()
+    async get(@Query('page', queryValidationPipe) page: PageQueryParamSchema)
+    {
+        const perPage = 2;
+        const question = await this.prismaService.question.findMany({
+            take: perPage,
+            skip: (page - 1) * perPage,
+            orderBy: {
+                CreatedAt: 'desc',
+            }
+        })
+
+        return { question };
+    }
 
     @Post()
     async handle(
