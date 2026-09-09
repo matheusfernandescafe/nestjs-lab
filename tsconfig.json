@@ -10,7 +10,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2023",
+    "target": "es2024",
     "sourceMap": true,
     "outDir": "./dist",
     "incremental": true,
@@ -19,6 +19,12 @@
     "strictNullChecks": true,
     "noImplicitAny": false,
     "strictPropertyInitialization": false,
-    "types": ["node"]
+    "types": [
+      "node",
+      "vitest/globals"
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }
