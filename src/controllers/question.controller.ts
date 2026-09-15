@@ -32,7 +32,7 @@ export class QuestionController {
   async get(
     @Query("page", queryValidationPipe) page: PageQueryParamSchema,
   ): Promise<{ question: unknown[] }> {
-    const perPage = 2;
+    const perPage = 10;
     const question = await this._prismaService.question.findMany({
       take: perPage,
       skip: (page - 1) * perPage,
